@@ -22,7 +22,9 @@
     "autoload": {
         "psr-4": {
             "hstanleycrow\\EasyPHPWebComponents\\": "src/"
-        },
+        }
+    },
+    "autoload-dev": {
         "files": [
             "src/helpers.php"
         ]
