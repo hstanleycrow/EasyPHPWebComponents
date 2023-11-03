@@ -1,0 +1,9 @@
+vendor
+docs
+.env
+composer.lock
+index.php
+/src/helpers.php
+/src/DBConnection.php
+examples.php
+manual_test.php

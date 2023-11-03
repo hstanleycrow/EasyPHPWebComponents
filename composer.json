@@ -1,0 +1,35 @@
+{
+    "name": "hstanleycrow/easyphparticleextractor",
+    "description": "Free PHP web components library like lists, buttons, dropdowns, and more.",
+    "keywords": [
+        "php",
+        "components",
+        "web components"
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/hstanleycrow/EasyPHPWebComponents",
+    "authors": [
+        {
+            "name": "Harold Rivas AKA Harold Crow",
+            "email": "holamundo@microaplicaciones.com",
+            "homepage": "https://www.microaplicaciones.com/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "hstanleycrow\\EasyPHPWebComponents\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
+}
