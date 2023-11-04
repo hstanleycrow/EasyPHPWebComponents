@@ -2,8 +2,6 @@
 
 namespace hstanleycrow\EasyPHPWebComponents;
 
-use hstanleycrow\EasyPHPWebComponents\Attributes;
-
 class Dropdown
 {
     protected static array $options = [];
@@ -26,7 +24,10 @@ class Dropdown
         }
 
         $dropdown .= '</select>';
-
+        self::$options = [];
+        self::$name = 'dropdown';
+        self::$selected = '';
+        self::$class = '';
         return $dropdown;
     }
 }

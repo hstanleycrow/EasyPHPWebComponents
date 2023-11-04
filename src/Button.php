@@ -21,6 +21,11 @@ class Button extends Icon
     {
         $rendererText = Icon::rendererText(self::$buttonText);
         $attributes = $attributes ?? self::$attributes;
+        self::$buttonText = null;
+        self::$attributes = [
+            'type' => 'submit',
+            'class' => 'btn btn-primary',
+        ];
         return '<button ' . Attributes::merge($attributes) . '>' . $rendererText . '</button>';
     }
 }

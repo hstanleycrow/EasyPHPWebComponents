@@ -26,6 +26,14 @@ class Link extends Icon
         $attributes['class'] = $attributes['class'] ?? self::$attributes['class'];
         $attributes['target'] = $attributes['target'] ?? self::$attributes['target'];
         $rendererText = Icon::rendererText(self::$buttonText);
+
+        self::$buttonText = null;
+        self::$attributes = [
+            'href' => '#',
+            'class' => '',
+            'text' => 'Link',
+            'target' => '_self',
+        ];
         return '<a ' . Attributes::merge($attributes) . '>' . $rendererText . '</a>';
     }
 }
