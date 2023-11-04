@@ -30,6 +30,8 @@ class Icon
                 $rendererText = $buttonText . '&nbsp;<i class="' . self::$iconClass . '"></i>';
             endif;
         endif;
+        self::$iconClass = null;
+        self::$iconPosition = 'left';
         return $rendererText;
     }
 }
