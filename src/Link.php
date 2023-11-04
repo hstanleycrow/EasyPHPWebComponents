@@ -4,23 +4,28 @@ namespace hstanleycrow\EasyPHPWebComponents;
 
 use hstanleycrow\EasyPHPWebComponents\Attributes;
 
-class Link
+class Link extends Icon
 {
     protected static array $attributes = [
         'href' => '#',
         'class' => '',
         'text' => 'Link',
-        'target' => '_blank',
+        'target' => '_self',
     ];
+    protected static string $buttonText = 'Haz clic aqui';
+    public static function setText(string $buttonText): self
+    {
+        self::$buttonText = $buttonText;
+        return new static();
+    }
 
     public static function render(?array $attributes = null): string
     {
         $attributes = $attributes ?? self::$attributes;
         $attributes['href'] = $attributes['href'] ?? self::$attributes['href'];
         $attributes['class'] = $attributes['class'] ?? self::$attributes['class'];
-        $attributes['text'] = $attributes['text'] ?? self::$attributes['text'];
         $attributes['target'] = $attributes['target'] ?? self::$attributes['target'];
-
-        return '<a ' . Attributes::merge($attributes) . '>' . $attributes['text'] . '</a>';
+        $rendererText = Icon::rendererText(self::$buttonText);
+        return '<a ' . Attributes::merge($attributes) . '>' . $rendererText . '</a>';
     }
 }
