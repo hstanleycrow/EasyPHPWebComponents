@@ -4,36 +4,53 @@ namespace hstanleycrow\EasyPHPWebComponents;
 
 use hstanleycrow\EasyPHPWebComponents\Attributes;
 
-class Link extends Icon
+class Link
 {
-    protected static array $attributes = [
+    protected array $attributes = [
         'href' => '#',
         'class' => '',
         'text' => 'Link',
         'target' => '_self',
     ];
-    protected static string $buttonText = 'Haz clic aqui';
-    public static function setText(string $buttonText): self
-    {
-        self::$buttonText = $buttonText;
-        return new static();
-    }
+    protected string $linkContent = 'Click here';
 
-    public static function render(?array $attributes = null): string
+    /**
+     * Constructs a new instance of the class.
+     *
+     * @param string $linkContent The content of the link.
+     */
+    public function __construct(string $linkContent)
+    {
+        $this->setLinkContent($linkContent);
+    }
+    /**
+     * Sets the content of the link.
+     *
+     * @param string $text The text to set as the link content.
+     * @throws \InvalidArgumentException If the provided link content is empty.
+     * @return void
+     */
+    private function setLinkContent(string $text): void
+    {
+        if (empty($text)) {
+            throw new \InvalidArgumentException('Link content cannot be empty');
+        }
+
+        $this->linkContent = $text;
+    }
+    /**
+     * Renders the HTML for the link element.
+     *
+     * @param array|null $attributes The attributes for the link element.
+     * @return string The rendered HTML for the link element.
+     */
+    public function render(?array $attributes = null): string
     {
         $attributes = $attributes ?? self::$attributes;
-        $attributes['href'] = $attributes['href'] ?? self::$attributes['href'];
-        $attributes['class'] = $attributes['class'] ?? self::$attributes['class'];
-        $attributes['target'] = $attributes['target'] ?? self::$attributes['target'];
-        $rendererText = Icon::rendererText(self::$buttonText);
+        $attributes['href'] ??= self::$attributes['href'];
+        $attributes['class'] ??= self::$attributes['class'];
+        $attributes['target'] ??= self::$attributes['target'];
 
-        self::$buttonText = null;
-        self::$attributes = [
-            'href' => '#',
-            'class' => '',
-            'text' => 'Link',
-            'target' => '_self',
-        ];
-        return '<a ' . Attributes::merge($attributes) . '>' . $rendererText . '</a>';
+        return '<a ' . Attributes::merge($attributes) . '>' . $this->linkContent . '</a>';
     }
 }
