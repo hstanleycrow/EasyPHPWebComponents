@@ -46,10 +46,10 @@ class Link
      */
     public function render(?array $attributes = null): string
     {
-        $attributes = $attributes ?? self::$attributes;
-        $attributes['href'] ??= self::$attributes['href'];
-        $attributes['class'] ??= self::$attributes['class'];
-        $attributes['target'] ??= self::$attributes['target'];
+        $attributes = $attributes ?? $this->attributes;
+        $attributes['href'] ??= $this->attributes['href'];
+        $attributes['class'] ??= $this->attributes['class'];
+        $attributes['target'] ??= $this->attributes['target'];
 
         return '<a ' . Attributes::merge($attributes) . '>' . $this->linkContent . '</a>';
     }
