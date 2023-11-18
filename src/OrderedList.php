@@ -2,36 +2,37 @@
 
 namespace hstanleycrow\EasyPHPWebComponents;
 
-use hstanleycrow\EasyPHPWebComponents\Attributes;
+use hstanleycrow\EasyPHPWebComponents\Attributes\ListAttributes;
 
 class OrderedList
 {
-    protected static array $attributes = [
-        'class' => 'ordered-list',
-    ];
-    protected static array $items = [];
-    protected static string $type = "1";
+    protected ListAttributes $listAttributes;
+    protected string $type;
 
-    public static function addItem(string $item)
+    public function __construct(?string $type = '1')
     {
-        self::$items[] = $item;
-        return new static();
-    }
-    public static function type(string $type)
-    {
-        self::$type = $type;
-        return new static();
+        $this->listAttributes = new ListAttributes();
+        $this->setType($type);
     }
 
-    public static function render(?array $attributes = null): string
+    public function addItem(string $item): self
     {
-        $attributes = $attributes ?? self::$attributes;
-        $attributes['type'] = self::$type;
-        $html = '<ol ' . Attributes::merge($attributes) . '>';
-        foreach (self::$items as $item) {
-            $html .= '<li>' . $item . '</li>';
-        }
-        $html .= '</ol>';
-        return $html;
+        $this->listAttributes->addItem($item);
+        return $this;
+    }
+    public function setType(string $type): self
+    {
+        $this->type = 'type="' . $type . '"';
+        return $this;
+    }
+    public function render(?array $attributes = null): string
+    {
+        $list = '<ol ';
+        $list .= $list .= $this->listAttributes->render();
+        $list .= $this->type ? $this->type : '';
+        $list .= '>';
+        $list .= $this->listAttributes->renderItems();
+        $list .= '</ol>';
+        return $list;
     }
 }

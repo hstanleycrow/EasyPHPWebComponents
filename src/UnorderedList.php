@@ -2,37 +2,48 @@
 
 namespace hstanleycrow\EasyPHPWebComponents;
 
-use hstanleycrow\EasyPHPWebComponents\Attributes;
+use hstanleycrow\EasyPHPWebComponents\Attributes\ListAttributes;
 
 class UnorderedList
 {
-    protected static array $attributes = [
-        'class' => 'unordered-list',
-    ];
-    protected static array $items = [];
-    protected static string $type = 'style="list-style-type:circle;"';
+    protected ListAttributes $listAttributes;
+    protected string $type;
 
-    public static function addItem(string $item)
+    public function __construct(?string $type = 'style="list-style-type:circle;"')
     {
-        self::$items[] = $item;
-        return new static();
-    }
-    public static function type(string $type)
-    {
-        self::$type = "list-style-type:$type;";
-        return new static();
+        $this->listAttributes = new ListAttributes();
+        $this->setType($type);
     }
 
-
-    public static function render(?array $attributes = null): string
+    public function addItem(string $item): self
     {
-        $attributes = $attributes ?? self::$attributes;
-        $attributes['style'] = self::$type;
-        $html = '<ul ' . Attributes::merge($attributes) . '>';
-        foreach (self::$items as $item) {
-            $html .= '<li>' . $item . '</li>';
-        }
-        $html .= '</ul>';
-        return $html;
+        $this->listAttributes->addItem($item);
+        return $this;
+    }
+    public function setType(string $type): self
+    {
+        $this->type = "list-style-type:$type";
+        return $this;
+    }
+    public function render(?array $attributes = null): string
+    {
+        $list = '<ul ';
+        $list .= 'style = "' . $this->type . '" ';
+        $list .= $this->listAttributes->render();
+        $list .= '>';
+        $list .= $this->listAttributes->renderItems();
+        $list .= '</ul>';
+        return $list;
+    }
+    public function addClass(string $class): self
+    {
+        $this->listAttributes->addClass($class);
+        return $this;
+    }
+
+    public function setId(string $id): self
+    {
+        $this->listAttributes->setId($id);
+        return $this;
     }
 }

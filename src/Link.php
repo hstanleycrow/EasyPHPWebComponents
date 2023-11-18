@@ -2,55 +2,59 @@
 
 namespace hstanleycrow\EasyPHPWebComponents;
 
-use hstanleycrow\EasyPHPWebComponents\Attributes;
+use hstanleycrow\EasyPHPWebComponents\Attributes\LinkAttributes;
 
 class Link
 {
-    protected array $attributes = [
-        'href' => '#',
-        'class' => '',
-        'text' => 'Link',
-        'target' => '_self',
-    ];
-    protected string $linkContent = 'Click here';
+    protected LinkAttributes $linkAttributes;
+
+    public function __construct(string $href, string $linkContent)
+    {
+        $this->linkAttributes = new LinkAttributes();
+        $this->linkAttributes->setLinkContent($linkContent);
+        $this->linkAttributes->setHref($href);
+    }
+    public function render(): string
+    {
+        $link = '<a ';
+        $link .= $this->linkAttributes->render();
+        $link .= '>';
+        $link .= $this->linkAttributes->getLinkContent();
+        $link .= '</a>';
+        return $link;
+    }
+    public function addClass(string $class): self
+    {
+        $this->linkAttributes->addClass($class);
+        return $this;
+    }
+    public function setRel($rel): self
+    {
+        $this->linkAttributes->setRel($rel);
+
+        return $this;
+    }
 
     /**
-     * Constructs a new instance of the class.
+     * Set the value of target
      *
-     * @param string $linkContent The content of the link.
+     * @return  self
      */
-    public function __construct(string $linkContent)
+    public function setTarget($target): self
     {
-        $this->setLinkContent($linkContent);
+        $this->linkAttributes->setTarget($target);
+
+        return $this;
     }
     /**
-     * Sets the content of the link.
+     * Set the value of download
      *
-     * @param string $text The text to set as the link content.
-     * @throws \InvalidArgumentException If the provided link content is empty.
-     * @return void
+     * @return  self
      */
-    private function setLinkContent(string $text): void
+    public function setDownload($download)
     {
-        if (empty($text)) {
-            throw new \InvalidArgumentException('Link content cannot be empty');
-        }
+        $this->linkAttributes->setDownload($download);
 
-        $this->linkContent = $text;
-    }
-    /**
-     * Renders the HTML for the link element.
-     *
-     * @param array|null $attributes The attributes for the link element.
-     * @return string The rendered HTML for the link element.
-     */
-    public function render(?array $attributes = null): string
-    {
-        $attributes = $attributes ?? $this->attributes;
-        $attributes['href'] ??= $this->attributes['href'];
-        $attributes['class'] ??= $this->attributes['class'];
-        $attributes['target'] ??= $this->attributes['target'];
-
-        return '<a ' . Attributes::merge($attributes) . '>' . $this->linkContent . '</a>';
+        return $this;
     }
 }

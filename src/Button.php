@@ -2,39 +2,24 @@
 
 namespace hstanleycrow\EasyPHPWebComponents;
 
-use hstanleycrow\EasyPHPWebComponents\Attributes;
+
+use hstanleycrow\EasyPHPWebComponents\Attributes\ButtonAttributes;
 
 class Button
 {
-    protected array $attributes = [
-        'type' => 'submit',
-        'class' => 'btn',
-    ];
-    protected string $buttonText = 'Send';
+    protected ButtonAttributes $buttonAttributes;
 
     /**
      * Constructor for the class.
      *
      * @param string $buttonText The text to be displayed on the button.
      */
-    public function __construct(string $buttonText)
+    public function __construct(string $buttonText, ?string $type = 'button')
     {
-        $this->setButtonText($buttonText);
-    }
-    /**
-     * Set the text for the button.
-     *
-     * @param string $text The text to be set for the button.
-     * @throws \InvalidArgumentException If the button text is empty.
-     * @return void
-     */
-    private function setButtonText(string $text): void
-    {
-        if (empty($text)) {
-            throw new \InvalidArgumentException('Button text cannot be empty');
-        }
-
-        $this->buttonText = $text;
+        $this->buttonAttributes = new ButtonAttributes();
+        $this->buttonAttributes->setButtonText($buttonText);
+        $this->buttonAttributes->setType($type);
+        $this->setDisabled(false);
     }
     /**
      * Renders the button element with the given attributes.
@@ -42,9 +27,35 @@ class Button
      * @param array|null $attributes The attributes to apply to the button element.
      * @return string The rendered button HTML.
      */
+
     public function render(?array $attributes = null): string
     {
-        $attributes = $attributes ?? $this->attributes;
-        return '<button ' . Attributes::merge($attributes) . '>' . $this->buttonText . '</button>';
+        $button = '<button ';
+        $button .= $this->buttonAttributes->render();
+        $button .= '>';
+        $button .= $this->buttonAttributes->getButtonText();
+        $button .= '</button>';
+        return $button;
+    }
+
+    public function addClass(string $class): self
+    {
+        $this->buttonAttributes->addClass($class);
+        return $this;
+    }
+
+    public function setId(string $id): self
+    {
+        $this->buttonAttributes->setId($id);
+        return $this;
+    }
+    /*public function getId(): string
+    {
+        return $this->buttonAttributes->getId();
+    }*/
+    public function setDisabled(bool $disabled): self
+    {
+        $this->buttonAttributes->setDisabled($disabled);
+        return $this;
     }
 }
