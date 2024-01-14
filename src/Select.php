@@ -51,4 +51,9 @@ class Select
         $this->selectAttributes->setDisabled($disabled);
         return $this;
     }
+    public function setMultiple(bool $multiple): self
+    {
+        $this->selectAttributes->setMultiple($multiple);
+        return $this;
+    }
 }

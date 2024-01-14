@@ -28,7 +28,7 @@ class Button
      * @return string The rendered button HTML.
      */
 
-    public function render(?array $attributes = null): string
+    public function render(): string
     {
         $button = '<button ';
         $button .= $this->buttonAttributes->render();
@@ -49,10 +49,6 @@ class Button
         $this->buttonAttributes->setId($id);
         return $this;
     }
-    /*public function getId(): string
-    {
-        return $this->buttonAttributes->getId();
-    }*/
     public function setDisabled(bool $disabled): self
     {
         $this->buttonAttributes->setDisabled($disabled);

@@ -1,6 +1,8 @@
 {
     "name": "hstanleycrow/easyphpwebcomponents",
     "description": "Free PHP web components library like lists, buttons, dropdowns, and more.",
+    "type": "library",
+    "version": "1.0.1",
     "keywords": [
         "php",
         "components",

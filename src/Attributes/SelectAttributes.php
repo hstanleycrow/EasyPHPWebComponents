@@ -65,4 +65,10 @@ class SelectAttributes extends GlobalAttributes
 
         return $this;
     }
+    public function setMultiple(bool $multiple): self
+    {
+        $this->multiple = $multiple ? 'multiple' : '';
+
+        return $this;
+    }
 }
